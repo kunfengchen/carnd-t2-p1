@@ -26,6 +26,9 @@ public:
     // measurement covariance matrix
     MatrixXd R_;
 
+    // measurement covariance matrix for radar
+    MatrixXd R_radar_;
+
     /**
      * Constructor
      */

@@ -1,4 +1,5 @@
 #include "kalman_filter.h"
+#include "tools.h"
 
 KalmanFilter::KalmanFilter() {}
 
@@ -53,14 +54,14 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     VectorXd z_pred = h_ * x_;
     VectorXd y = z - z_pred;
     MatrixXd ht = h_.transpose();
-    MatrixXd S = h_ * P_ * ht + R_;
-    MastriXd Si = S.inverse();
+    MatrixXd S = h_ * P_ * ht + R_radar_;
+    MatrixXd Si = S.inverse();
     MatrixXd Pht = P_ * ht;
     MatrixXd K = Pht * Si;
 
     // new estimate
     x_ = x_ + (K * y);
-    long x_zsie = x_.size();
-    MatrixXd I = MarrixXd::Identity(x_size, x_size);
+    long x_size = x_.size();
+    MatrixXd I = MatrixXd::Identity(x_size, x_size);
     P_ = (I - K * h_) * P_;
 }
