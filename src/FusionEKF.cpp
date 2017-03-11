@@ -39,13 +39,18 @@ FusionEKF::FusionEKF() {
 
   //measurement covariance
   ekf_.R_ = R_laser_;
-  ekf_.R_ << 0.0225, 0,
-          0, 0.0225;
+  // ekf_.R_ << 0.0225, 0,
+  //         0, 0.0225;
+  ekf_.R_ << 0.0025, 0,
+          0, 0.0025;
 
   ekf_.R_radar_ = R_radar_;
-  ekf_.R_radar_ << 0.0225, 0, 0,
-          0, 0.0225, 0,
-          0, 0, 0.0225;
+  // ekf_.R_radar_ << 0.0225, 0, 0,
+  //       0, 0.0225, 0,
+  //       0, 0, 0.0225;
+  ekf_.R_radar_ << 0.0025, 0, 0,
+          0, 0.0025, 0,
+          0, 0, 0.0025;
 
   //measurement matrix
   ekf_.H_ = H_laser_;
@@ -60,8 +65,8 @@ FusionEKF::FusionEKF() {
           0, 0, 0, 1;
 
   //set the acceleration noise components
-  noise_ax = 5;
-  noise_ay = 5;
+  noise_ax = 3; // 5
+  noise_ay = 3; // 5
 }
 
 /**
@@ -75,21 +80,16 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
    ****************************************************************************/
   if (!is_initialized_) {
     /**
-    TODO:
+    DONE:
       * Initialize the state ekf_.x_ with the first measurement.
       * Create the covariance matrix.
       * Remember: you'll need to convert radar from polar to cartesian coordinates.
     */
     // first measurement
-    cout << "EKF Init: " << ekf_.x_ << endl;
+    cout << "EKF Init: " << endl << ekf_.x_ << endl;
     // ekf_.x_ = VectorXd(4);
 
-    cout << "KFC raw_mea: " << endl << measurement_pack.raw_measurements_ << endl;
-
-    // ekf_.x_ << 1, 1, 1, 1; // KFC
-
-
-    cout << "KFC ekf_.x_= " << endl << ekf_.x_ << endl;
+    ekf_.x_ << 1, 1, 1, 1;
 
     previous_timestamp_ = measurement_pack.timestamp_;
 
@@ -112,6 +112,11 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
     // done initializing, no need to predict or update
     is_initialized_ = true;
+
+    // print the output
+    cout << "x_ = " << endl << ekf_.x_ << endl;
+    cout << "P_ = " << endl << ekf_.P_ << endl;
+
     return;
   }
 
