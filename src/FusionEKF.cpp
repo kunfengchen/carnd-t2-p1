@@ -41,8 +41,8 @@ FusionEKF::FusionEKF() {
   ekf_.R_ = R_laser_;
   // ekf_.R_ << 0.0225, 0,
   //        0, 0.0225;
-  ekf_.R_ << 0.0005, 0,
-           0, 0.0005;
+  ekf_.R_ << 0.0003, 0,
+           0, 0.0003;
 
   ekf_.R_radar_ = R_radar_;
   ekf_.R_radar_ << 0.09, 0, 0,
