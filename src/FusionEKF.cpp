@@ -41,16 +41,16 @@ FusionEKF::FusionEKF() {
   ekf_.R_ = R_laser_;
   // ekf_.R_ << 0.0225, 0,
   //         0, 0.0225;
-  ekf_.R_ << 0.0025, 0,
-          0, 0.0025;
+  ekf_.R_ << 0.0015, 0,
+          0, 0.0015;
 
   ekf_.R_radar_ = R_radar_;
   // ekf_.R_radar_ << 0.0225, 0, 0,
   //       0, 0.0225, 0,
   //       0, 0, 0.0225;
-  ekf_.R_radar_ << 0.0025, 0, 0,
-          0, 0.0025, 0,
-          0, 0, 0.0025;
+  ekf_.R_radar_ << 0.0015, 0, 0,
+          0, 0.0015, 0,
+          0, 0, 0.0015;
 
   //measurement matrix
   ekf_.H_ = H_laser_;
