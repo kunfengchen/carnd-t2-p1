@@ -40,17 +40,14 @@ FusionEKF::FusionEKF() {
   //measurement covariance
   ekf_.R_ = R_laser_;
   // ekf_.R_ << 0.0225, 0,
-  //         0, 0.0225;
-  ekf_.R_ << 0.0015, 0,
-          0, 0.0015;
+  //        0, 0.0225;
+  ekf_.R_ << 0.0005, 0,
+           0, 0.0005;
 
   ekf_.R_radar_ = R_radar_;
-  // ekf_.R_radar_ << 0.0225, 0, 0,
-  //       0, 0.0225, 0,
-  //       0, 0, 0.0225;
-  ekf_.R_radar_ << 0.0015, 0, 0,
-          0, 0.0015, 0,
-          0, 0, 0.0015;
+  ekf_.R_radar_ << 0.09, 0, 0,
+          0, 0.0009, 0,
+          0, 0, 0.09;
 
   //measurement matrix
   ekf_.H_ = H_laser_;
@@ -65,8 +62,8 @@ FusionEKF::FusionEKF() {
           0, 0, 0, 1;
 
   //set the acceleration noise components
-  noise_ax = 3; // 5
-  noise_ay = 3; // 5
+  noise_ax = 7; // 5
+  noise_ay = 7; // 5
 }
 
 /**
