@@ -30,6 +30,7 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
 
 		//coefficient-wise multiplication
 		residual = residual.array()*residual.array();
+		/// cout << "residual = " << endl << residual << endl;
 		rmse += residual;
 	}
 
@@ -64,7 +65,9 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 	//check division by zero
 	if(fabs(c1) < 0.0001){
 		cout << "CalculateJacobian () - Error - Division by Zero" << endl;
-		Hj(0,0) = 0;
+		Hj << 0, 0, 0, 0,
+				1e+9, 1e+9, 0, 0,
+				0, 0, 0, 0;
 		return Hj;
 	}
 
