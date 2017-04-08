@@ -52,6 +52,10 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
       * update the state by using Extended Kalman Filter equations
     */
     MatrixXd h_ = Tools::CalculateJacobian(x_);
+    if (h_(0,0) == 0) {
+        // skip divide by zero
+        return;
+    }
     VectorXd z_pred = h_ * x_;
     VectorXd y = z - z_pred;
     MatrixXd ht = h_.transpose();
