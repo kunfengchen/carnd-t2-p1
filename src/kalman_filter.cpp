@@ -53,6 +53,9 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     */
     MatrixXd h_ = Tools::CalculateJacobian(x_);
 
+    //// Found my z_pred init error from the reference: 
+    //// https://github.com/ksakmann/Extended-Kalman-Filter/blob/kaspar/src/FusionEKF.cpp
+
     double ro_pred = pow(pow(x_[0], 2) + pow(x_[1], 2), 0.5);
     double theta_pred = 0.0;
     if (fabs(x_[0]) > 0.0001) {
