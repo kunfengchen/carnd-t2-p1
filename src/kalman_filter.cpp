@@ -52,11 +52,21 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
       * update the state by using Extended Kalman Filter equations
     */
     MatrixXd h_ = Tools::CalculateJacobian(x_);
-    if (h_(0,0) == 0) {
-        // skip divide by zero
-        return;
+
+    double ro_pred = pow(pow(x_[0], 2) + pow(x_[1], 2), 0.5);
+    double theta_pred = 0.0;
+    if (fabs(x_[0]) > 0.0001) {
+        theta_pred = atan2(x_[1], x_[0]);
     }
-    VectorXd z_pred = h_ * x_;
+
+    double rodot_pred = 0.0;
+    if (fabs(ro_pred) > 0.0001) {
+        rodot_pred = (x_[0] * x_[2] + x_[1] * x_[3]) / ro_pred;
+    }
+
+    VectorXd z_pred(3);
+    z_pred << ro_pred, theta_pred, rodot_pred;
+
     VectorXd y = z - z_pred;
     MatrixXd ht = h_.transpose();
     MatrixXd S = h_ * P_ * ht + R_radar_;

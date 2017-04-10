@@ -103,16 +103,13 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       double theta = measurement_pack.raw_measurements_[1];
       double x = ro * cos(theta);
       double y = ro * sin(theta);
-      if (x == 0 or y ==0) {
-        cout << "SKIP the zeros !!!" << endl;
-      }
-      ekf_.x_ << x, y, 0, 0;
+      ekf_.x_ << x, y, 0.0, 0.0;
     }
     else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
       /**
       Initialize state.
       */
-      ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
+      ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0.0, 0.0;
     }
 
     if (ekf_.x_.norm() > 1e-4) {
